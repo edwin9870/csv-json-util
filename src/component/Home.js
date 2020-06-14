@@ -3,12 +3,12 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import '../Home.css';
 import TextField from '@material-ui/core/TextField';
-import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import JSON5 from 'json5'
+import JSON5 from 'json5';
+import MessageStatus from './MessageStatus';
 
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             width: '100%',
@@ -28,7 +28,7 @@ export default function Home() {
     const [jsonInput, setJsonInput] = React.useState('');
     const [jsonValidation, setJsonValidation] = React.useState({
         valid: true,
-        errorMessage: ''
+        message: ''
     });
 
     const onChangeTextJsonInput = (e) => {
@@ -37,10 +37,12 @@ export default function Home() {
 
         try {
             const data = JSON5.parse(jsonInputValue)
-            setJsonValidation({ valid: true, errorMessage: '' })
+            setJsonValidation({ valid: true, message: 'Valid JSON' })
         } catch (e) {
             if (jsonInputValue.length > 2) {
-                setJsonValidation({ valid: false, errorMessage: e.message })
+                setJsonValidation({ valid: false, message: e.message })
+            } else {
+                setJsonValidation({ valid: false, message: '' })
             }
         }
 
@@ -61,18 +63,7 @@ export default function Home() {
                     variant="outlined"
                 />
             </div><br />
-            {!jsonValidation.valid ?
-                <div className={classes.root}>
-                    <Alert severity="error">{jsonValidation.errorMessage}</Alert>
-                </div>
-                : null
-            }
-            {(jsonValidation.valid && jsonInput.length > 2)  ?
-                <div className={classes.root}>
-                    <Alert severity="info">Valid JSON</Alert>
-                </div>
-                : null
-            }
+            <MessageStatus message={jsonValidation.message} severity={jsonValidation.valid ? 'info' : 'error'} />
 
 
         </Container>
