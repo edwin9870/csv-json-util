@@ -1,0 +1,21 @@
+* {
+    color: white;
+}
+
+.main {
+    margin-top: 30px;
+}
+
+.json-Text-field {
+    margin-top: 15px;
+}
+
+.json-text-textarea {
+    width: 620px !important;
+    
+}
+
+.json-text-textarea textarea {
+    color: white;
+    font-size: 12px;
+}
