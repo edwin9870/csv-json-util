@@ -5,6 +5,7 @@ import '../Home.css';
 import TextField from '@material-ui/core/TextField';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import JSON5 from 'json5'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,7 +36,7 @@ export default function Home() {
         setJsonInput(jsonInputValue)
 
         try {
-            const data = JSON.parse(jsonInputValue)
+            const data = JSON5.parse(jsonInputValue)
             setJsonValidation({ valid: true, errorMessage: '' })
         } catch (e) {
             if (jsonInputValue.length > 2) {
