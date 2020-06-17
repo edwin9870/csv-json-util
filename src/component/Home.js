@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import JSON5 from 'json5';
 import MessageStatus from './MessageStatus';
+import { JsonToTable } from "react-json-to-table";
 
 
 const useStyles = makeStyles((theme) =>
@@ -64,6 +65,8 @@ export default function Home() {
                 />
             </div><br />
             <MessageStatus message={jsonValidation.message} severity={jsonValidation.valid ? 'info' : 'error'} />
+            {(jsonValidation.valid && jsonInput.length > 2 ) && <JsonToTable json={JSON5.parse(jsonInput)} />}
+
 
 
         </Container>
