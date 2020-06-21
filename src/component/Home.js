@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import '../Home.css';
@@ -27,6 +27,7 @@ export default function Home() {
 
     const classes = useStyles();
     const [jsonInput, setJsonInput] = React.useState('');
+    const [jsonData, setJsonData] = React.useState(null);
     const [jsonValidation, setJsonValidation] = React.useState({
         valid: true,
         message: ''
@@ -35,19 +36,21 @@ export default function Home() {
     const onChangeTextJsonInput = (e) => {
         const jsonInputValue = e.target.value;
         setJsonInput(jsonInputValue)
+    };
 
+    useEffect(() => {
         try {
-            const data = JSON5.parse(jsonInputValue)
+            const data = JSON5.parse(jsonInput)
             setJsonValidation({ valid: true, message: 'Valid JSON' })
+            setJsonData(data)
         } catch (e) {
-            if (jsonInputValue.length > 2) {
+            if (jsonInput.length > 2) {
                 setJsonValidation({ valid: false, message: e.message })
             } else {
                 setJsonValidation({ valid: false, message: '' })
             }
         }
-
-    };
+    }, [jsonInput]);
 
     return (
         <Container className="main" maxWidth="sm">
@@ -65,10 +68,7 @@ export default function Home() {
                 />
             </div><br />
             <MessageStatus message={jsonValidation.message} severity={jsonValidation.valid ? 'info' : 'error'} />
-            {(jsonValidation.valid && jsonInput.length > 2 ) && <JsonToTable json={JSON5.parse(jsonInput)} />}
-
-
-
+            {(jsonValidation.valid && jsonInput.length > 2 ) && <JsonToTable json={jsonData} />}
         </Container>
     )
 }
