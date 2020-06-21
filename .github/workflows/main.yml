@@ -35,9 +35,9 @@ jobs:
       uses: docker/build-push-action@v1.1.0
       with:
         # Username used to log in to a Docker registry. If not set then no login will occur
-        username: edwin9870 # optional
+        username:  # optional
         # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
-        password: ramirez5682# optional
+        password: # optional
         # Docker repository to tag the image with
         repository: csv-json-util
         # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
